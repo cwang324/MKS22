@@ -16,8 +16,22 @@ public class QueenBoard{
      */
     public boolean solve()
     {
-	return false;
+	
+	return solveH(0);
     }
+
+    public boolean solveH(int col){
+	if (col==board.length-1){
+	    return addQueen(row,col);
+	}
+
+	for (int row=0; row < board.length; row++){
+	    if (addQueen(row,col)){
+		return  solveH(col+1);	
+	    }	    
+	} 
+    }
+    
 
     public void printSolution(){
 	/**Print the board like toString, except
