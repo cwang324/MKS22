@@ -48,7 +48,6 @@ public class QueenBoard{
 	    if(row + offset < board.length){
 		board[row+offset][col+offset]--;
 	    }
-	    col++;
 	    offset++;
 	}
 	return true;
@@ -68,7 +67,6 @@ public class QueenBoard{
 	    if(row + offset < board.length){
 		board[row+offset][col+offset]++;
 	    }
-	    col++;
 	    offset++;
 	}
 	return true;
