@@ -1,0 +1,9 @@
+public class Board{
+
+    int[][] board;
+
+    public Board(int n){
+	board = new int[n][n];
+    }
+
+}

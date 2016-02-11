@@ -15,46 +15,22 @@ public class QueenBoard{
      *all n queens.
      */
     public boolean solve()
-    {	
+    {
+	
 	return solveH(0);
     }
 
     public boolean solveH(int col){
-	
-	
-	if (col == board.length){
-	    return true;
+	if (col==board.length-1){
+	    return addQueen(row,col);
 	}
-	else{
-	    for (int row=0; row < board.length; row++){
-		if (addQueen(row,col)){
-		    return (solveH(col+1));
-		} else {
-		    for (int r=0; r<board.length; row++){
-			if (board[r][col-1]==1){
-			    removeQueen(r,col);
-			    addQueen(r+1,col);
-			}
-		    }
-		    return solveH(col+1);
-		   
-		}
-	    }
-	}
-	return false;
-    }
-    
-			
-    // public boolean canPlace(int row, int col){
-    // 	for (int r = 0; r < row; r++){
-    // 	    if ((board[r][col] == col) ||
-    // 		(Math.abs(r-row) == Math.abs(board[r][col]-col))){
-    // 		return false;
-    // 	    }
-    // 	}
-    // 	return true;
-    // }
 
+	for (int row=0; row < board.length; row++){
+	    if (addQueen(row,col)){
+		return  solveH(col+1);	
+	    }	    
+	} 
+    }
     
 
     public void printSolution(){

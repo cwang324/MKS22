@@ -1,0 +1,7 @@
+public class Driver{
+    public static void main(String[] args){
+
+	Board b1 = new Board(2);
+	System.out.println(b1.printArray());
+    }
+}
