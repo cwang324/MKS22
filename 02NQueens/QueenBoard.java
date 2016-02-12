@@ -1,8 +1,10 @@
 public class QueenBoard{
+
+    
     private int[][]board;
     
     public QueenBoard(int size){
-	board = new int[size][size];
+    	board = new int[size][size];
     }
 
     /**
@@ -16,52 +18,45 @@ public class QueenBoard{
      */
     public boolean solve()
     {	
-	return solveH(0);
+    	return solveH(0);
     }
 
-    public boolean solveH(int col){
-	
-	
-	if (col == board.length){
-	    return true;
-	}
-	else{
-	    for (int row=0; row < board.length; row++){
-		if (addQueen(row,col)){
-		    return (solveH(col+1));
-		} else {
-		    for (int r=0; r<board.length; row++){
-			if (board[r][col-1]==1){
-			    removeQueen(r,col);
-			    addQueen(r+1,col);
-			}
-		    }
-		    return solveH(col+1);
-		   
-		}
+    public boolean solveH(int col){	
+    	if (col >= board.length){
+    	    return true;
+    	}
+	for (int row=0; row < board.length; row++){
+	    if (addQueen(row,col) && solveH(col+1)){
+		return true;
 	    }
+	    removeQueen(row,col);      
+	   
 	}
 	return false;
     }
     
 			
-    // public boolean canPlace(int row, int col){
-    // 	for (int r = 0; r < row; r++){
-    // 	    if ((board[r][col] == col) ||
-    // 		(Math.abs(r-row) == Math.abs(board[r][col]-col))){
-    // 		return false;
-    // 	    }
-    // 	}
-    // 	return true;
-    // }
-
+ 
     
 
     public void printSolution(){
 	/**Print the board like toString, except
 	   all negative numbers, and 0's are replaced with '_'
 	   and all 1's are replaced with 'Q'
-	 */
+	*/
+	String solution = "";
+	for (int row=0; row < board.length; row++){
+	    for (int col=0; col<board[row].length; col++){
+		if (board[row][col]<=0){
+		    solution += "_" + "\t";
+		}
+		if (board[row][col]==1){
+		    solution += "Q" + "\t";
+		}
+	    }
+	    solution += "\n";
+	}
+	System.out.println(solution);
     }
 
 
@@ -72,7 +67,7 @@ public class QueenBoard{
 
 
 
-    public boolean addQueen(int row, int col){
+ private boolean addQueen(int row, int col){
 	if(board[row][col] != 0){
 	    return false;
 	}
@@ -91,7 +86,7 @@ public class QueenBoard{
 	return true;
     }
 
-    public boolean removeQueen(int row, int col){
+    private boolean removeQueen(int row, int col){
 	if(board[row][col] != 1){
 	    return false;
 	}
@@ -121,18 +116,11 @@ public class QueenBoard{
 	return ans;
     }
 
-
-
-
-    
     public static void main(String[]args){
-	QueenBoard b = new QueenBoard(5);
+	QueenBoard b = new QueenBoard(7);
         System.out.println(b);
-	b.addQueen(3,0);
-	b.addQueen(0,1);
-        System.out.println(b);
-	b.removeQueen(3,0);
-        System.out.println(b);
+	b.solve();
+	b.printSolution();
+	
     }
-    
 }
