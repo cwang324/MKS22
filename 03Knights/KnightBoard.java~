@@ -5,12 +5,6 @@ public class KnightBoard{
     public KnightBoard(int size){
 	board = new int[size+4][size+4];
 	for (int row = 0; row < board.length; row++){
-	    for (int col = 0; col < board[row].length; col++){
-		if (row < 2 || row > size+1 ||
-		    col < 2 || col > size+ 1){
-		    board[row][col] = -1;
-		}
-	    }
 	}
     }
 
@@ -29,10 +23,6 @@ public class KnightBoard{
 	return retString;
     }
     
-    public static void main (String[] args){
-	
-	KnightBoard b = new KnightBoard(4);
-	System.out.println(b);
-    }
+
 
 }
