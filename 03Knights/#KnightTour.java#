@@ -127,7 +127,7 @@ public class KnightTour
 		return true;		
 	}
 	
-	public boolean tour(Location startLoc)
+	public boolean solve(Location startLoc)
 	{
 		if ( oneSolutionFound)
 			return true;
@@ -144,19 +144,14 @@ public class KnightTour
         // ok more tour to go
     
 		List<Location> moves = findPossibleMoves(startLoc);
-//		int numberOfMoves = moves.size();
-//		if ( numberOfMoves == 0 )
-//		{
-//			chessBoard[startLoc.row][startLoc.col] = 0;
-//			return false;
-//		}
+
 		
         int moveCount = 0;		
 		for ( Location move: moves)
 		{
 			move.nthStep = startLoc.nthStep+1;
 	
-			if ( tour(move) )
+			if ( solve(move) )
 			{
 			   moveCount++;
 			}
@@ -178,15 +173,13 @@ public class KnightTour
 	{
 		KnightTour kt = new KnightTour(6);
 		
-//		int row = Math.random() * 8
-//		int col = Math.random() * 8;
+
 		int nthStep = 1;
 		int row = 2;
 		int col = 3;
 		Location startLoc = new Location(row, col, nthStep);
 
-		// wish you luck!
-		boolean tourResult = kt.tour(startLoc);
+		boolean tourResult = kt.solve(startLoc);
 		
 	}
 }

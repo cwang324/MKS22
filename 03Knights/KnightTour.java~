@@ -3,7 +3,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class KnightTour
+public class KnightTour 
 {
 
 	private static final int CLASSICAL_CHESS_BOARD_SIZE = 8;
@@ -78,7 +78,7 @@ public class KnightTour
 	
 	private List<Location> findPossibleMoves(Location  startLoc)
 	{
-		List<Location> locations = new ArrayList<Location>(8);
+		List<Location> locations = new ArrayList(8);
 		
 		// find all 8 locations
 		
