@@ -1,8 +1,9 @@
 
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class KnightBoard 
+public class KnightTour 
 {
 
 	private static final int CLASSICAL_CHESS_BOARD_SIZE = 8;
@@ -14,40 +15,38 @@ public class KnightBoard
 	
 	private int[][] chessBoard;
 	private int boardFillCount = 0;
-	private int numRows, numCols;
+	private int boardSize;
 	private StringBuilder sb;
 	private boolean oneSolutionFound = false;
 	
-	
-	public KnightBoard(int numRows, int numCols){
-		this.numRows = numRows;
-		this.numCols = numCols;
-		chessBoard = new int[numRows][numCols];
-		sb = new StringBuilder( numRows * numCols *  5);	
+	/**
+	 * Default C'tor
+	 */
+	public KnightTour(int boardSize)
+	{
+		this.boardSize = boardSize;
+		chessBoard = new int[boardSize][boardSize];
+		sb = new StringBuilder( boardSize * boardSize *  5);		
 	}
 	
-	
-	public KnightBoard(int boardSize)
+	/**
+	 * Default C'tor
+	 */
+	public KnightTour()
 	{
-		this(boardSize, boardSize);	
-	}
-	
-
-	public KnightBoard()
-	{
-		this(CLASSICAL_CHESS_BOARD_SIZE, CLASSICAL_CHESS_BOARD_SIZE);
+		this(CLASSICAL_CHESS_BOARD_SIZE);
 	}
 	
 
 	/**
 	 * 
 	 */
-	private void printChessBoardWithStringBuilder ()
+	private void printChessBoard ()
 	{
 		
-		for  ( int i = 0; i < numRows; i++)
+		for  ( int i = 0; i < boardSize; i++)
 		{
-			for  ( int j = 0; j < numCols; j++)
+			for  ( int j = 0; j < boardSize; j++)
 			{
 			    
 				sb.append(LEFT_PAREN);
@@ -64,35 +63,6 @@ public class KnightBoard
 		// reset sb content to null
 		//sb.
 	}
-
-	
-	public void printSolution ()
-	{
-		
-		for  ( int i = 0; i < numRows; i++)
-		{
-			for  ( int j = 0; j < numCols; j++)
-			{
-			    
-                int cellValue = chessBoard[i][j];
-                
-                if ( cellValue >= 10 )
-                  System.out.print(cellValue);
-                else
-                  System.out.print("_" + cellValue);
-				
-				if ( j < numCols)
-				   System.out.print(" ");
-			}
-			System.out.println();
-		}
-		System.out.println();
-		
-		// reset sb content to null
-		//sb.
-	}
-
-	
 	
     
 	
@@ -108,7 +78,7 @@ public class KnightBoard
 	
 	private List<Location> findPossibleMoves(Location  startLoc)
 	{
-		List<Location> locations = new ArrayList<Location>(8);
+		List<Location> locations = new ArrayList(8);
 		
 		// find all 8 locations
 		
@@ -137,7 +107,7 @@ public class KnightBoard
 	    // drop those locations that are outside the chessboard
 		// drop those locations that are visited						
 		return ! (     loc.row < 0 || loc.col < 0        
-				   ||  loc.row > chessBoard.length - 1 ||  loc.col > chessBoard[0].length - 1 
+				   ||  loc.row > chessBoard.length - 1 ||  loc.col > chessBoard.length - 1 
 				   ||  chessBoard[loc.row][loc.col] != 0
 				);
 	}
@@ -145,9 +115,9 @@ public class KnightBoard
 	
 	private boolean isBoardFilled()
 	{
-		for  ( int i = 0; i < numRows; i++)
+		for  ( int i = 0; i < boardSize; i++)
 		{
-			for  ( int j = 0; j < numCols; j++)
+			for  ( int j = 0; j < boardSize; j++)
 			{
 				if (chessBoard[i][j]==0){
 					return false;
@@ -157,7 +127,7 @@ public class KnightBoard
 		return true;		
 	}
 	
-	public boolean solve(Location startLoc)
+	public boolean tour(Location startLoc)
 	{
 		if ( oneSolutionFound)
 			return true;
@@ -165,9 +135,8 @@ public class KnightBoard
 		chessBoard[startLoc.row][startLoc.col] = startLoc.nthStep;
 		if ( isBoardFilled())
 		{
-			
-		//	printSolution();
-			System.out.println("done");
+			System.out.println("Yeah! we are done");
+			printChessBoard();
 			oneSolutionFound = true;
 			return true;
 		}
@@ -187,7 +156,7 @@ public class KnightBoard
 		{
 			move.nthStep = startLoc.nthStep+1;
 	
-			if ( solve(move) )
+			if ( tour(move) )
 			{
 			   moveCount++;
 			}
@@ -207,21 +176,18 @@ public class KnightBoard
 	
 	public static void main(String[] args) 
 	{
-		KnightBoard kb = new KnightBoard(5,6);
+		KnightTour kt = new KnightTour(6);
 		
 //		int row = Math.random() * 8
 //		int col = Math.random() * 8;
 		int nthStep = 1;
-		int row = 0;
-		int col = 0;
-		
-		
+		int row = 2;
+		int col = 3;
 		Location startLoc = new Location(row, col, nthStep);
 
 		// wish you luck!
-		//boolean tourResult = kb.solve(startLoc);
-		kb.solve(startLoc);
-		kb.printSolution();
+		boolean tourResult = kt.tour(startLoc);
+		
 	}
 }
 
@@ -251,4 +217,7 @@ class Location
 	
 	
 }
+
+
+
 
