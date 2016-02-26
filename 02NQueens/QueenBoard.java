@@ -117,8 +117,7 @@ public class QueenBoard{
     }
 
     public static void main(String[]args){
-	QueenBoard b = new QueenBoard(7);
-        System.out.println(b);
+	QueenBoard b = new QueenBoard(10);
 	b.solve();
 	b.printSolution();
 	
