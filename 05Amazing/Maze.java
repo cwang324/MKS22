@@ -152,21 +152,21 @@ public class Maze{
 	        System.out.println(CLEAR_SCREEN);
 	    }
 
-	    public String toString(){
-	    	String retString = "";
-	    	for (int rows=0; rows < maze.length; rows++){
+	    // public String toString(){
+	    // 	String retString = "";
+	    // 	for (int rows=0; rows < maze.length; rows++){
 	    		
-	    		for (int cols=0; cols < maze[0].length; cols++){
-	    			retString+=maze[rows][cols];
+	    // 		for (int cols=0; cols < maze[0].length; cols++){
+	    // 			retString+=maze[rows][cols];
 	    			
-	    		}
-	    		retString+="\n";
-	    	}
-	    	return retString;
+	    // 		}
+	    // 		retString+="\n";
+	    // 	}
+	    // 	return retString;
 	    	
-	    }
+	    // }
 	    
-	    /*
+	    
 	    public String toString(){
 	        int maxx = maze.length;
 	        int maxy = maze[0].length;
@@ -190,7 +190,7 @@ public class Maze{
 	        }
 	        return HIDE_CURSOR + go(0,0) + ans + "\n" + SHOW_CURSOR + color(37,40);
 	    }
-	    */
+	    
 
 
 	    //MORE FREE STUFF!!! *you can ignore all of this*
