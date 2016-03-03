@@ -154,9 +154,10 @@ public class Silver {
 										sum += pasture[rows][cols - 1];
 									}
 				  					
-				  					// add from the right
-									if(cols + 1 < cols && pasture[rows][cols + 1] > 0){
+				  					// add from the right 
+									if(cols + 1 < numCols && pasture[rows][cols + 1] > 0){
 										sum +=  pasture[rows][cols + 1];
+										//	System.out.println("oops");
 									}
 									
 									// add from the top
@@ -164,24 +165,15 @@ public class Silver {
 										sum += pasture[rows - 1][cols];
 									}
 									
-									// add from the bottom
-									if(rows + 1 < rows && pasture[rows + 1][cols] > 0){
+									// add from the bottom 
+									if(rows + 1  < numRows && pasture[rows + 1][cols] > 0){
 										sum +=  pasture[rows + 1][cols];
 									}
 									newPasture[rows][cols] = sum;
 								}else{
 									newPasture[rows][cols] = -1;
 								}
-//				  					newPasture[rows][cols]= add(rows-1,cols) + add(rows, cols-1) 
-//				    									+ add(rows+1,cols) + add(rows, cols+1);
-//				  					
-////				  				}else if (pasture[rows][cols]>0){
-////					  				newPasture[rows][cols]=0;
-//				  				}else{
-//				  					newPasture[rows][cols]=-1;
-//				  				}
-				  				
-				  				//System.out.println(newPasture[rows][cols]);
+//				  				
 		  				}				  				
 				   }
 				 
@@ -190,7 +182,7 @@ public class Silver {
 				 System.out.println(this);
 			}	
 			solution = pasture[endx][endy];
-			System.out.println(solution);
+	        
 			return true;
 		}
 		 
@@ -204,31 +196,10 @@ public class Silver {
 			if (s.debug){
 				
 				System.out.println(s);
-				//s.start();
-				
-//				System.out.println(s);
-//				s.changeState();
-//				
-//				System.out.println(s);
-//				s.changeState();
-//				
-//				System.out.println(s);
-//				s.changeState();
-//				
-//				System.out.println(s);
-//				s.changeState();
-//				
-//				System.out.println(s);
-//				s.changeState();
-//				
-//				System.out.println(s);
-//				s.changeState();
-//				
-//				System.out.println(s);
-//				s.changeState();
+	       
 				s.solve();
 				
-				
+				System.out.println(s.solution+",6,Wang,Carol");
 			}
 		}
 		

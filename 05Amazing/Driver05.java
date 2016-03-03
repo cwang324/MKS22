@@ -5,10 +5,10 @@ public class Driver05{
         f = new Maze("data1.dat",true);//true animates the maze.
 	
 
-        // f.clearTerminal();
-        // f.solve();
+        f.clearTerminal();
+        f.solve();
 
-        // f.clearTerminal();
-        // System.out.println(f);
+        f.clearTerminal();
+        System.out.println(f);
     }
 }
