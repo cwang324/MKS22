@@ -58,95 +58,89 @@ public class Sorts {
 		return minI;		   
 	    }
 
-	    /**
-	     * Precondition: Every indexed variable of the array a has a value.
-	     * Postcondition: a[0] <= a[1] <= ... <= a[a.length - 1].
-	     */
-	    public static void mergesort(int[] data)
-	    {
-		int startA = 0; 
-		int endA = data.length-1;
-				
-		betterMergeSortImpl(data, startA, endA);
-				
-	    }
+	   /**
+    * Precondition: Every indexed variable of the array a has a value.
+    * Postcondition: a[0] <= a[1] <= ... <= a[a.length - 1].
+    */
+	public static void mergeSort(int[] a)
+	{
+		int dataSize = a.length;
 		
-	    /**
-	     * Precondition: Every indexed variable of the array a has a value.
-	     * Postcondition: a[0] <= a[1] <= ... <= a[a.length - 1].
-	     */
-	    public static void betterMergeSortImpl(int[] a, int startIndex, int endIndex)
-	    {
-		int dataSize = endIndex - startIndex + 1;
-				
 		if ( dataSize >= 2)
-		    {	
+		{	
 			int halfLength = dataSize / 2;
-			int startA = startIndex;
-			int endA = startIndex + halfLength-1;
-			int startB = endA + 1;
-			int endB = endIndex;
-			betterMergeSortImpl(a, startA, endA);
-			betterMergeSortImpl(a, startB, endB);
-			betterMerge(a, startA, endA, startB, endB);
-		    }
-		else
-		    {	
-			// do nothing, an array of size 1 is already sorted
-		    }
-	    }
-		
-		
-	    //Precondition: int[] a conains the entire array to be sorted using merge sort 
-	    //startA <= endA <= startB <= endB 
-	    //
-	    //Postcondition: Array a index startA to endB is sorted from smallest to largest 
-	    //and lastHalf and is sorted from smallest to largest.
-	    private static void betterMerge(int[] a, int startA, int endA, int startB, int endB)
-	    {
+			int [] firstHalf = new int[halfLength];
+			int [] secondHalf = new int[dataSize-halfLength];
 			
-		int tempArraySize = endB - startA + 1;
-		int[] tempArray = new int[tempArraySize];
-		int aIndex = startA;
-		int bIndex = startB;
-		int tIndex = 0;
-
-	         
-		while ((aIndex <= endA) && (bIndex <= endB))
-		    {
-			if (a[aIndex] < a[bIndex])
-			    {
-				tempArray[tIndex++] = a[aIndex++];                
-			    }
-			else
-			    {
-				tempArray[tIndex++] = a[bIndex++];
-			    }
-		    }
-	        // At least one half (startA to endA or startB to endB) is
-	        // completely copied to tempArray
-
-	        //Copy rest of firstHalf, if any.
-		while (aIndex <= endA)
-		    {
-			tempArray[tIndex++] = a[aIndex++];
-		    }
-
-	        //Copy rest of lastHalf, if any.
-	        while (bIndex <= endB)
-		    {
-			tempArray[tIndex++] = a[bIndex++];
-		    }
-	        
-	        // copy the merged result from tempArray back to array a
-	        tIndex = 0;
-	        aIndex = startA;
-	        while ( startA <= endB)
-		    {	
-	        	a[aIndex++] = tempArray[tIndex++];
-	        	startA++;
-		    }        
-	    }
+			divide(a, firstHalf, secondHalf);
+			mergeSort(firstHalf);
+			mergeSort(secondHalf);
+			merge(a, firstHalf, secondHalf);
+		}
+		else
+		{	
+			// do nothing, an array of size 1 is already sorted
+		}
 	}
+	
+	
+	//Precondition: a.length = firstHalf.length + lastHalf.length.
+    //Postcondition: All the elements of a are divided
+    //between the arrays firstHalf and lastHalf.
+    private static void divide(int[] a, int[] firstHalf, int[] lastHalf)
+    {
+        for (int i = 0; i < firstHalf.length; i++)
+            firstHalf[i] = a[i];
+        
+        for (int i = 0; i < lastHalf.length; i++)
+            lastHalf[i] = a[firstHalf.length + i];
+    }
+	
+    
+    //Precondition: Arrays firstHalf and lastHalf are sorted from 
+    //smallest to largest; a.length = firstHalf.length + 
+    //lastHalf.length.
+    //Postcondition: Array a contains all the values from firstHalf 
+    //and lastHalf and is sorted from smallest to largest.
+	private static void merge(int[] a, int[] firstHalf, int[] lastHalf)
+    {
+        int firstHalfIndex = 0, lastHalfIndex = 0, aIndex = 0;
+
+        while ((firstHalfIndex < firstHalf.length) &&
+			   (lastHalfIndex < lastHalf.length))
+        {
+            if (firstHalf[firstHalfIndex] < lastHalf[lastHalfIndex])
+            {
+                a[aIndex] = firstHalf[firstHalfIndex];
+                firstHalfIndex++;
+            }
+            else
+            {
+                a[aIndex] = lastHalf[lastHalfIndex];
+                lastHalfIndex++;
+            }
+            aIndex++;
+        }
+        //At least one of firstHalf and lastHalf has been
+        //completely copied to a.
+
+        //Copy rest of firstHalf, if any.
+		while (firstHalfIndex < firstHalf.length)
+        {
+            a[aIndex] = firstHalf[firstHalfIndex];
+            aIndex++;
+            firstHalfIndex++;
+        }
+
+        //Copy rest of lastHalf, if any.
+        while (lastHalfIndex < lastHalf.length)
+        {
+            a[aIndex] = lastHalf[lastHalfIndex];
+            aIndex++;
+            lastHalfIndex++;
+        }
+    }    
+    
+}
 	
 
