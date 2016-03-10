@@ -141,17 +141,9 @@ public class Sorts {
         }
     }    
 
-    public static void quickSort(int[] data){
-	quickSort(data,0,data.length-1);
-    }
     
-    public static void quickSort(int[]data, int left, int right){
-	if (data.length > 1){
-	    index = partition(data,left,right);
-	    quickSort(data, left, index-1);
-	    quickSort(data,index+1, right);
-	}
-    }
+
+
 }
 	
 
