@@ -20,7 +20,7 @@ public class Quick {
 //	    this allows your quickselect method to decide where to go next.mew
 	
 	private static int partition(int[]data, int left, int right){
-		int part = ((int) (Math.random() * (right-left)) + left);
+		int part = ((int) (Math.random() * (right-left+1)) + left);
 		//System.out.println(part);
 		int partVal = data[part];
 		swap(data, part, right);
