@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 public class Quick {
 
@@ -91,9 +92,12 @@ public class Quick {
 	
     public static void main(String[] args){
 		
-	int[] data = {5,13,6,9,1,87,3,0};
-	System.out.println(quickselect(data,4));
+	int[] data = {1,9,4,3,1,4,3,1,9,4,1,1,3};
+	//System.out.println(quickselect(data,4));
 	//System.out.println(partition(data,2,5));
+
+	printArray(data);
+        quickSort(data);
 	printArray(data);
     }
 }
