@@ -19,12 +19,81 @@ public class Quick {
     //return the index of the partition element.
     //	    this allows your quickselect method to decide where to go next.mew
 	
+    private static int partitionOld(int[]data, int left, int right){
+	int part = ((int) (Math.random() * (right-left+1)) + left);
+	//System.out.println(part);
+	int partVal = data[part];
+	swap(data, part, right);
+	int newI = left;
+	
+	for (int i = left; i<right; i++){
+	    if (data[i] < partVal){
+		swap(data,i,newI);
+	        newI++;
+	    }
+	    
+	}
+	swap(data,right,newI);
+	return newI;
+    }
+	
+
+	
+    public static int quickSelectOld(int[]data, int k){
+	if (k < 0 || k > data.length){
+	    throw new IllegalArgumentException("The entered k is out of bounds");
+	}
+	return quickSelectOld(data,k,0,data.length-1);
+    }
+	
+    //return the kth smallest value.
+    // when k = 0 return the smallest.
+    // 0 <= k < data.length
+
+    private static int quickSelectOld(int[]data, int k, int left, int right){
+	int newI = partitionOld(data,left,right);
+	//printArray(data);
+	if (newI==k){
+	    return data[k];
+	}else{
+	    if (k<newI){
+		return (quickSelectOld(data,k,left,newI-1));
+	    }else{
+		return(quickSelectOld(data,k,newI+1,right));
+	    }
+	}
+    }
+    //return the kth smallest value in the given left/right range
+    // left <= k <= right
+
+	
+    public static void quickSortOld(int[] data){
+	quickSortOld(data,0,data.length-1);
+    }
+    
+    public static void quickSortOld(int[]data, int left, int right){
+	if (left<right){
+	    int index = partitionOld(data,left,right);
+	    quickSortOld(data, left, index-1);
+	    quickSortOld(data,index+1, right);
+	}
+    }
+
+    
+
+    //choose a random partition element  at a location from left to right inclusive.
+    //partition the array such that the randomly chosen element divides all values smaller and larger than it.
+    //smaller elements on the left side of the partition, larger on the right side
+    //return the index of the partition element.
+    //	    this allows your quickselect method to decide where to go next.mew
+	
     private static int partition(int[]data, int left, int right){
 	int part = ((int) (Math.random() * (right-left+1)) + left);
 	//System.out.println(part);
 	int partVal = data[part];
 	swap(data, part, right);
 	int newI = left;
+	int[] pivots = new int[2];
 	for (int i = left; i<right; i++){
 	    if (data[i] < partVal){
 		swap(data,i,newI);
@@ -76,6 +145,10 @@ public class Quick {
 	    quickSort(data,index+1, right);
 	}
     }
+    
+    
+
+
     public static void printArray(int[] data){
 	System.out.print("[");
 	for (int i = 0; i < data.length; i++){
@@ -93,8 +166,9 @@ public class Quick {
 		
 	int[] data = {5,13,6,9,1,87,3,0};
 	printArray(data);
-	quickSort(data);
+	quickSortOld(data);
 	//System.out.println(partition(data,2,5));
 	printArray(data);
     }
 }
+
