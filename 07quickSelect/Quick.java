@@ -1,4 +1,3 @@
-
 public class Quick {
 
 
@@ -70,7 +69,7 @@ public class Quick {
     }
     
     public static void quickSort(int[]data, int left, int right){
-	if (data.length > 1){
+	if (left<right){
 	    int index = partition(data,left,right);
 	    quickSort(data, left, index-1);
 	    quickSort(data,index+1, right);
@@ -92,7 +91,8 @@ public class Quick {
     public static void main(String[] args){
 		
 	int[] data = {5,13,6,9,1,87,3,0};
-	System.out.println(quickselect(data,4));
+	printArray(data);
+	quickSort(data);
 	//System.out.println(partition(data,2,5));
 	printArray(data);
     }
