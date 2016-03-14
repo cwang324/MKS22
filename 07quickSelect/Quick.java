@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 public class Quick {
 
@@ -87,21 +88,44 @@ public class Quick {
     //return the index of the partition element.
     //	    this allows your quickselect method to decide where to go next.mew
 	
-    private static int partition(int[]data, int left, int right){
-	int part = ((int) (Math.random() * (right-left+1)) + left);
-	//System.out.println(part);
-	int partVal = data[part];
-	swap(data, part, right);
-	int newI = left;
-	int[] pivots = new int[2];
-	for (int i = left; i<right; i++){
+    private static int[] partition(int[]data, int left, int right){
+    	int part = ((int) (Math.random() * (right-left+1)) + left);
+    	
+    	int partVal = data[part];
+    	//System.out.println("partition index:" + part + "\t part val:" + partVal);
+    	int[] partedAry = new int[right-left+1];
+    	int front = 0;
+    	int back = partedAry.length-1;
+    	int pivotVals = 0;
+	
+	// parting elements in separate partedAry
+	for (int i = left; i<=right; i++){
 	    if (data[i] < partVal){
-		swap(data,i,newI);
-		newI++;
-	    }	
+	    	partedAry[front]=data[i];
+	    	front++;
+	    } else if (data[i] > partVal){
+	    	partedAry[back]=data[i];
+	    	back--;
+	    } else {
+	    	pivotVals++;
+	    }
 	}
-	swap(data,right,newI);
-	return newI;
+	
+	int[] pivots = new int[2];
+	pivots[0] = left+front;
+	pivots[1] = pivots[0] + pivotVals - 1;
+	
+	// adding in pivot values into middle of array
+	for (int i=0; i<pivotVals; i++){
+		partedAry[i+front]=partVal;
+	}
+	
+	// parting values in original array
+	for (int i=0; i<partedAry.length; i++){
+		data[i+left] = partedAry[i];
+	}
+	
+	return pivots;
     }
 	
 
@@ -118,15 +142,15 @@ public class Quick {
     // 0 <= k < data.length
 
     private static int quickselect(int[]data, int k, int left, int right){
-	int newI = partition(data,left,right);
+	int[] pivots = partition(data,left,right);
 	//printArray(data);
-	if (newI==k){
+	if (k >= pivots[0] && k<=pivots[1]){
 	    return data[k];
 	}else{
-	    if (k<newI){
-		return (quickselect(data,k,left,newI-1));
+	    if (k<pivots[0]){
+	    	return (quickselect(data,k,left,pivots[0]-1));
 	    }else{
-		return(quickselect(data,k,newI+1,right));
+	    	return(quickselect(data,k,pivots[1]+1,right));
 	    }
 	}
     }
@@ -135,15 +159,34 @@ public class Quick {
 
 	
     public static void quickSort(int[] data){
-	quickSort(data,0,data.length-1);
+    	quickSort(data,0,data.length-1);
+    	System.out.println(data.length-1);
     }
     
+    
+    private static int count = 0;
     public static void quickSort(int[]data, int left, int right){
-	if (left<right){
-	    int index = partition(data,left,right);
-	    quickSort(data, left, index-1);
-	    quickSort(data,index+1, right);
-	}
+    	
+//    	count++;
+//    	if ( count > 14)
+//    		return;
+//    	System.out.print("quicksort: ");
+//    	printArray(data);
+//    	System.out.println("left:" + left + "   right:" + right);
+//    	System.out.println("-----------------------------");
+    	
+    	if (left<right && right>0)
+    	{
+    		int[] pivots = partition(data,left,right);
+    		
+//    		System.out.println("after partition: pivots=");
+//    		printArray(pivots);
+//    		System.out.println("-----------------------------");
+    		
+    		
+    		quickSort(data, left, pivots[0]-1);
+    		quickSort(data,pivots[1]+1, right);
+    	}
     }
     
     
@@ -164,11 +207,52 @@ public class Quick {
 	
     public static void main(String[] args){
 		
-	int[] data = {5,13,6,9,1,87,3,0};
-	printArray(data);
-	quickSortOld(data);
-	//System.out.println(partition(data,2,5));
-	printArray(data);
+//	int[] data = {5,13,6,9,1,87,3,0,1,1,1,1,1,4,4,4,4,5,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2};
+//	//int[] data = {3,1,2,5,4};
+//    printArray(data);
+//	quickSort(data);
+//	//printArray(partition(data,0,data.length-1));
+//	printArray(data);
+    	
+    	int[] d = new int [4000000];
+    	
+
+    	for(int i = 0; i < d.length; i++){
+    		d[i]= (int)(Math.random()*Integer.MAX_VALUE);
+    		//d[i]= (int)(Math.random()*4);
+    	}
+    	
+    	// a1
+    	long startTime = System.currentTimeMillis();
+    	Arrays.sort(d); 
+    	long endTime = System.currentTimeMillis();
+    	
+    	
+    	long elapsedTime = endTime - startTime;  // this is milliseconds
+    	System.out.println("Arrays Time:"+ (elapsedTime)/1000.0 + " seconds");
+    	
+    	
+    	// a2
+    	startTime = System.currentTimeMillis();
+    	quickSortOld(d); 
+    	endTime = System.currentTimeMillis();
+    	
+    	
+    	elapsedTime = endTime - startTime;  // this is milliseconds
+    	System.out.println("Time:"+ (elapsedTime)/1000.0 + " seconds");
+    	
+    	// a3
+    	startTime = System.currentTimeMillis();
+    	quickSort(d); 
+    	endTime = System.currentTimeMillis();
+    	
+    	
+    	elapsedTime = endTime - startTime;  // this is milliseconds
+    	System.out.println("A3 Time:"+ (elapsedTime)/1000.0 + " seconds");
+    	
+    	
+    	
+    	
+    	
     }
 }
-
