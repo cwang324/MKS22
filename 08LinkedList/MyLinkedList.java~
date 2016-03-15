@@ -1,0 +1,30 @@
+public class MyLinkedList{
+
+
+    private class LNode{
+	
+	private int data;
+	private LNode next;
+
+	public LNode(int data, LNode next){
+	    this.data = data;
+	    this.next = next;
+	}
+
+	public LNode(){
+	}
+
+	// accessors
+	public int getData(){ return data; }
+	public LNode getNext(){ return next; }
+
+	// mutators
+	public void setData(int newData){ data = newData; }
+	public void setNext(LNode newNext){ next = newNext; }
+
+    }
+
+
+
+
+}
