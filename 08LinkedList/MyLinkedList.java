@@ -26,22 +26,21 @@ public class MyLinkedList{
 
     public class LNode{
 	
-	private int data;
+	private int value;
 	private LNode next;
 
-	public LNode(int data){
-	    this.data = data;
-	    next = null;
+	public LNode(int value){
+	    this.value = value;
 	}
 
 	public LNode(){	}
 
 	// accessors
-	public int getData(){ return data; }
+	public int getValue(){ return value; }
 	public LNode getNext(){ return next; }
 
 	// mutators
-	public void setData(int newData){ data = newData; }
+	public void setValue(int newValue){ value = newValue }
 	public void setNext(LNode newNext){ next = newNext; }
 
 	
