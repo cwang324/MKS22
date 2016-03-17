@@ -96,14 +96,44 @@ public class MyLinkedList{
 
     // remove the element at the specified index, returns the value removed
     public int remove(int index){
-	LNode p = head;
-	for (int i=0; i < index-1; i++){
-	    p=p.getNext();
-	}
-	p.setNext(p.getNext());
-	
+    	LNode p = head;
+    	for (int i=0; i < index-1; i++){
+    		p=p.getNext();
+    	}
+    	int oldValue = p.getValue();
+    	if (p==head){
+    		head=p.getNext();
+    	}else{
+    		p.setNext(p.getNext().getNext());
+    	}
+    	return oldValue;
     }
 
+    // insert a new element at the specified index, 0 at the front, size() at the end
+    public boolean add(int index, int value){
+    	LNode p = head;
+    	for (int i=0; i < index-1; i++){
+    		p=p.getNext();
+    	}
+    	LNode nextNode = p.getNext();
+    	p.setNext(new LNode(value));
+    	p.getNext().setNext(nextNode);
+    	return true;
+    }
+    
+    // returns the index of the 1st occurrence of the value in the linked list, -1 if not found
+    public int indexOf(int value){
+    	int index = -1;
+    	LNode p = head;
+    	for (int i=0; i<size(); i++){
+    		if (p.getValue()==value){
+    			return i;
+    		}
+    		p=p.getNext();
+    	}
+    	return index;
+    }
+    
     public static void main (String[] args){
 
 	//    LNode l = new LNode(4);
@@ -111,10 +141,13 @@ public class MyLinkedList{
 	System.out.println(L);
 	L.add(0);
 	L.add(54);
-	L.add(-10);
-	System.out.println(L.size);
-	System.out.println(L.set(2,100));
+	L.add(23);
 	System.out.println(L);
+	L.remove(0);
+	System.out.println(L);
+	System.out.println(L.indexOf(54));
+	System.out.println(L);
+
     }
 
 
