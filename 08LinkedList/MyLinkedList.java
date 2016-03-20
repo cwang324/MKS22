@@ -1,7 +1,8 @@
 public class MyLinkedList{
 
     
-    LNode head;
+    private LNode head;
+    private LNode end;
     int size;
     
     // public MyLinkedList(LNode start){
@@ -52,14 +53,17 @@ public class MyLinkedList{
     public boolean add(int value){
 	if (head == null){
 	    head = new LNode(value);
+	    end = new LNode(value);
 	    size++;
 	}else{
 	    LNode p = head;
 	    while (p.getNext()!=null){
 		p=p.getNext();
 	    }
-	    p.setNext(new LNode(value));
+	    end = new LNode(value);
+	    p.setNext(end);
 	    size++;
+	    
 	}
 	return true;
     }
@@ -85,13 +89,17 @@ public class MyLinkedList{
     // change the value of the element at the specified index to the newValue,
     // return the old value
     public int set(int index, int newValue){
-	LNode p = head;
-        for (int i=0; i < index; i++){
-	    p=p.getNext();
-	}
-	int oldValue = p.getValue();
-	p.setValue(newValue);
-	return oldValue;
+    	if (index < 0 || index > size - 1){
+    	    throw new IllegalArgumentException();
+    	}
+    	
+    	LNode p = head;
+	    for (int i=0; i < index; i++){
+		    p=p.getNext();
+		}
+		int oldValue = p.getValue();
+		p.setValue(newValue);
+		return oldValue;
     }
 
     // remove the element at the specified index, returns the value removed
@@ -99,25 +107,44 @@ public class MyLinkedList{
     	LNode p = head;
     	for (int i=0; i < index-1; i++){
     		p=p.getNext();
+    		
     	}
     	int oldValue = p.getValue();
     	if (p==head){
     		head=p.getNext();
+    		
     	}else{
     		p.setNext(p.getNext().getNext());
+    		
     	}
+    	size--;
     	return oldValue;
     }
 
     // insert a new element at the specified index, 0 at the front, size() at the end
     public boolean add(int index, int value){
-    	LNode p = head;
-    	for (int i=0; i < index-1; i++){
-    		p=p.getNext();
+    	if (index < 0 || index > size){
+    		throw new IllegalArgumentException("Please enter a valid index.");
     	}
-    	LNode nextNode = p.getNext();
-    	p.setNext(new LNode(value));
-    	p.getNext().setNext(nextNode);
+    	LNode p = head;
+    	if (head == null || index==0){
+    	    head = new LNode(value);
+    	    head.setNext(p);
+    	    size++;
+    	}
+    	else{
+    		for (int i=0; i < index-1; i++){
+    			p=p.getNext();
+    		}
+	    	LNode nextNode = p.getNext();
+	    	p.setNext(new LNode(value));
+	    	p.getNext().setNext(nextNode);
+	    	size++;
+	    	if (index==size()){
+	    		end=p.getNext();
+	    	}
+	    	
+    	}
     	return true;
     }
     
@@ -138,15 +165,21 @@ public class MyLinkedList{
 
 	//    LNode l = new LNode(4);
 	MyLinkedList L = new MyLinkedList();
-	System.out.println(L);
-	L.add(0);
+	
+	
 	L.add(54);
 	L.add(23);
-	System.out.println(L);
-	L.remove(0);
-	System.out.println(L);
-	System.out.println(L.indexOf(54));
-	System.out.println(L);
+	L.add(0, 13);
+	System.out.println(L + " " + L.size());
+	L.set(0,20);
+	System.out.println(L + " " + L.size());
+    System.out.println(L.remove(0));
+    System.out.println(L + " " + L.size());
+    L.add(2,20);
+    System.out.println(L + " " + L.size());
+//	System.out.println(L);
+//	System.out.println(L.indexOf(54));
+//	System.out.println(L);
 
     }
 
