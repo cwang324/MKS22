@@ -14,58 +14,66 @@ public class MyLinkedList<T>{
     // 	start = new LNode();
     // }
    
-    public String toString(){
-	String retString = "[ ";
+    public String toString()
+    {
+	     String retString = "[ ";
         LNode current = head;
 	
-        while (current!=null) {
-	    retString += current.getValue();
-	    if (current.getNext()!=null){
-		retString += ", ";	
+        while (current!=null) 
+        {
+	       retString += current.getValue();
+	       if (current.getNext()!=null)
+	       {
+		       retString += ", ";	
+	       }
+	       current = current.getNext();	
 	    }
-	    current = current.getNext();	
-	}
-	return retString + " ]";
+	    return retString + " ]";
+    }
+    
+    
+    public class LNode<T> 
+    {	
+    	 private T value;
+	     private LNode<T> next;
+
+	     public LNode(T value)
+	     {
+	         this.value = value;
+	     }
+
+	     public LNode() {}
+
+	     // accessors
+	     public T getValue(){ return  value; }
+	     public LNode<T> getNext(){ return next; }
+
+	     // mutators
+	     public void setValue(T newValue){ value = newValue; }
+	     public void setNext(LNode newNext){ next = newNext; }
     }
 
-    public class LNode<T>{
-	
-	private T value;
-	private LNode<T> next;
-
-	public LNode(T value){
-	    this.value = value;
-	}
-
-	public LNode(){	}
-
-	// accessors
-	public T getValue(){ return  value; }
-	public LNode<T> getNext(){ return next; }
-
-	// mutators
-	public void setValue(T newValue){ value = newValue; }
-	public void setNext(LNode newNext){ next = newNext; }
-
-	
-    }
-
-    public boolean add(T value){
-	if (head == null){
-	    head = new LNode(value);
-	    end = new LNode(value);
-	    size++;
-	}else{
-	    LNode p = head;
-	    while (p.getNext()!=null){
-		p=p.getNext();
-	    }
-	    end = new LNode(value);
-	    p.setNext(end);
-	    size++;
-	    
-	}
-	return true;
+    
+    public boolean add (T value)
+    {
+	   if (head == null)
+	   {
+	      head = new LNode(value);
+	      end = head;
+	      size++;
+	   }  
+	   else 
+	   {
+	       LNode p = head;
+	       while (p.getNext()!=null)
+	       {
+		        p=p.getNext();
+	       }
+	       end = new LNode(value);
+	       p.setNext(end);
+	       size++;	    
+	   }
+	   return true;
     }
 
 
@@ -74,26 +82,34 @@ public class MyLinkedList<T>{
 
     
     // get the value of the element at the specified index (0 based)
-    public T get (int index){
-	if (index < 0 || index > size - 1){
-	    throw new IllegalArgumentException();
-	}
-	LNode p = head;
-	while (index>0){
-	    p=p.getNext();
-	    index--;
-	}
-	return p.getValue();
+    public T get (int index)
+    {
+	   if (index < 0 || index > size - 1)
+	   {
+	       throw new IllegalArgumentException();
+	   }
+	   
+	   LNode<T> p = head;
+	   while (index > 0)
+	   {
+	       p=p.getNext();
+	       index--;
+	   }
+	   return p.getValue();
     }
 
+    
+    
     // change the value of the element at the specified index to the newValue,
     // return the old value
-    public T set(int index, T newValue){
-    	if (index < 0 || index > size - 1){
+    public T set(int index, T newValue)
+    {
+    	if (index < 0 || index > size - 1)
+    	{
     	    throw new IllegalArgumentException();
     	}
     	
-    	LNode p = head;
+    	LNode<T> p = head;
 	for (int i=0; i < index; i++){
 	    p=p.getNext();
 	}
@@ -104,7 +120,7 @@ public class MyLinkedList<T>{
 
     // remove the element at the specified index, returns the value removed
     public T remove(int index){
-    	LNode p = head;
+    	LNode<T> p = head;
     	for (int i=0; i < index-1; i++){
 	    p=p.getNext();
     		
@@ -164,18 +180,18 @@ public class MyLinkedList<T>{
     public static void main (String[] args){
 
 	//    LNode l = new LNode(4);
-	MyLinkedList<Integer> L = new MyLinkedList<Integer>();
+	MyLinkedList<String> L = new MyLinkedList<String>();
 	
 	
-	L.add(54);
-	L.add(23);
-	L.add(0, 13);
-	System.out.println(L + " " + L.size());
-	L.set(0,20);
-	System.out.println(L + " " + L.size());
-	System.out.println(L.remove(0));
-	System.out.println(L + " " + L.size());
-	L.add(2,20);
+	L.add("Hello");
+//	L.add(23);
+//	L.add(0, 13);
+//	System.out.println(L + " " + L.size());
+//	L.set(0,20);
+//	System.out.println(L + " " + L.size());
+//	System.out.println(L.remove(0));
+//	System.out.println(L + " " + L.size());
+//	L.add(2,20);
 	System.out.println(L + " " + L.size());
 	//	System.out.println(L);
 	//	System.out.println(L.indexOf(54));
