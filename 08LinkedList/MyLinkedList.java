@@ -14,21 +14,27 @@ public class MyLinkedList<T>{
     // 	start = new LNode();
     // }
    
-    public String toString()
+    public String toString(boolean b)
     {
-	     String retString = "[ ";
-        LNode current = head;
+	
+	String retString = "[ ";
+        LNode<T> current = head;
 	
         while (current!=null) 
-        {
-	       retString += current.getValue();
-	       if (current.getNext()!=null)
-	       {
-		       retString += ", ";	
-	       }
-	       current = current.getNext();	
+	    {
+		retString += current.getValue();
+		if (current.getNext()!=null)
+		    {
+			retString += ", ";	
+		    }
+		current = current.getNext();	
 	    }
-	    return retString + " ]";
+	retString += " ]";
+	if (b){
+	    retString += "\t head:" + head.getValue()
+		+ "\t end:" + end.getValue();
+	}
+	return retString;
     }
     
     
@@ -50,7 +56,7 @@ public class MyLinkedList<T>{
 
 	     // mutators
 	     public void setValue(T newValue){ value = newValue; }
-	     public void setNext(LNode newNext){ next = newNext; }
+	     public void setNext(LNode<T> newNext){ next = newNext; }
     }
 
     
@@ -58,18 +64,18 @@ public class MyLinkedList<T>{
     {
 	   if (head == null)
 	   {
-	      head = new LNode(value);
+	      head = new LNode<T>(value);
 	      end = head;
 	      size++;
 	   }  
 	   else 
 	   {
-	       LNode p = head;
+	       LNode<T> p = head;
 	       while (p.getNext()!=null)
 	       {
 		        p=p.getNext();
 	       }
-	       end = new LNode(value);
+	       end = new LNode<T>(value);
 	       p.setNext(end);
 	       size++;	    
 	   }
@@ -86,7 +92,7 @@ public class MyLinkedList<T>{
     {
 	   if (index < 0 || index > size - 1)
 	   {
-	       throw new IllegalArgumentException();
+	       throw new IndexOutOfBoundsException();
 	   }
 	   
 	   LNode<T> p = head;
@@ -106,7 +112,7 @@ public class MyLinkedList<T>{
     {
     	if (index < 0 || index > size - 1)
     	{
-    	    throw new IllegalArgumentException();
+    	    throw new IndexOutOfBoundsException();
     	}
     	
     	LNode<T> p = head;
@@ -138,22 +144,24 @@ public class MyLinkedList<T>{
     }
 
     // insert a new element at the specified index, 0 at the front, size() at the end
-    public boolean add(int index, int value){
-    	if (index < 0 || index > size){
-	    throw new IllegalArgumentException("Please enter a valid index.");
+    public boolean add(int index, T value){
+    	if (index < 0 || index >= size){
+	    throw new IndexOutOfBoundsException("Please enter a valid index.");
     	}
     	LNode<T> p = head;
     	if (head == null || index==0){
-    	    head = new LNode(value);
+    	    head = new LNode<T>(value);
     	    head.setNext(p);
     	    size++;
-    	}
+    	}else if (index==size){
+	    add(value);
+	}
     	else{
 	    for (int i=0; i < index-1; i++){
 		p=p.getNext();
 	    }
-	    LNode nextNode = p.getNext();
-	    p.setNext(new LNode(value));
+	    LNode<T> nextNode = p.getNext();
+	    p.setNext(new LNode<T>(value));
 	    p.getNext().setNext(nextNode);
 	    size++;
 	    if (index==size()){
