@@ -1,19 +1,44 @@
+import java.util.*;
 
-public class MyLinkedList<T>{
 
-   
+public class MyLinkedList<T> implements Iterable<T>{
+
+    public Iterator<T> iterator(){
+	return new MyLinkedListIteratorThingy();
+    }
+
+    public class MyLinkedListIteratorThingy implements Iterator<T>{
+
+	private LNode<T> next;
+
+	public MyLinkedListIteratorThingy(){
+	    next=head;
+	}
+
+	public boolean hasNext(){
+	    return next != null;
+	}
+
+	public T next(){
+	    if (!hasNext()){
+		throw new NoSuchElementException();
+	    }
+	    T ans = next.getValue();
+	    next = next.getNext();
+	    return ans;
+	}
+
+	public void remove(){
+	    throw new UnsupportedOperationException();
+	}
+    }
+
     private LNode<T> head;
     private LNode<T> end;
+   
     int size;
     
-    // public MyLinkedList(LNode start){
-    // 	this.start=start;
-    // 	size = 0;
-    // }
 
-    // public MyLinkedList(){
-    // 	start = new LNode();
-    // }
     
     public String toString()
     {
@@ -58,45 +83,45 @@ public class MyLinkedList<T>{
     }
     
     
-    public class LNode<T> 
+    public class LNode<T>
     {	
-    	 private T value;
-	     private LNode<T> next;
+	private T value;
+	private LNode next;
 
-	     public LNode(T value)
-	     {
-	         this.value = value;
-	     }
+	public LNode(T value)
+	    {
+		this.value = value;
+	    }
 
-	     public LNode() {}
+	public LNode() {}
 
-	     // accessors
-	     public T getValue(){ return  value; }
-	     public LNode<T> getNext(){ return next; }
+	// accessors
+	public T getValue(){ return  value; }
+	public LNode<T> getNext(){ return next; }
 
-	     // mutators
-	     public void setValue(T newValue){ value = newValue; }
-	     public void setNext(LNode<T> newNext){ next = newNext; }
+	// mutators
+	public void setValue(T newValue){ value = newValue; }
+	public void setNext(LNode<T> newNext){ next = newNext; }
     }
 
     
     public boolean add (T value)
     {
-	   if (head == null)
-	   {
-	      head = new LNode<T>(value);
-	      end = head;
-	      size++;
-	   }  
-	   else 
-	   {
+	if (head == null)
+	    {
+		head = new LNode<T>(value);
+		end = head;
+		size++;
+	    }  
+	else 
+	    {
 		   
-	       LNode<T> p = end;
-	       end = new LNode<T>(value);
-	       p.setNext(end);
-	       size++;	    
-	   }
-	   return true;
+		LNode<T> p = end;
+		end = new LNode<T>(value);
+		p.setNext(end);
+		size++;	    
+	    }
+	return true;
     }
 
 
@@ -107,18 +132,18 @@ public class MyLinkedList<T>{
     // get the value of the element at the specified index (0 based)
     public T get (int index)
     {
-	   if (index < 0 || index > size - 1)
-	   {
-	       throw new IndexOutOfBoundsException();
-	   }
+	if (index < 0 || index > size - 1)
+	    {
+		throw new IndexOutOfBoundsException();
+	    }
 	   
-	   LNode<T> p = head;
-	   while (index > 0)
-	   {
-	       p=p.getNext();
-	       index--;
-	   }
-	   return p.getValue();
+	LNode<T> p = head;
+	while (index > 0)
+	    {
+		p=p.getNext();
+		index--;
+	    }
+	return p.getValue();
     }
 
     
@@ -128,9 +153,9 @@ public class MyLinkedList<T>{
     public T set(int index, T newValue)
     {
     	if (index < 0 || index > size - 1)
-    	{
-    	    throw new IndexOutOfBoundsException();
-    	}
+	    {
+		throw new IndexOutOfBoundsException();
+	    }
     	
     	LNode<T> p = head;
 	for (int i=0; i < index; i++){
@@ -144,7 +169,7 @@ public class MyLinkedList<T>{
     // remove the element at the specified index, returns the value removed
     public T remove(int index){
     	if (index < 0 || index >= size()){
-    		throw new IndexOutOfBoundsException();
+	    throw new IndexOutOfBoundsException();
     	}
     	LNode<T> p = head;
     	for (int i=0; i < index-1; i++){
@@ -152,17 +177,17 @@ public class MyLinkedList<T>{
     		
     	}
         T oldValue = p.getValue();
-    	if (p==head){
-    		head=p.getNext();
+    	if (index==0){
+	    head=p.getNext();
     		
     	}else{
     		
-    		p.setNext(p.getNext().getNext());
-    		if (index==size()-1){
-    			end = p;
-    		}else{
-    			end = p.getNext();
-    		}
+	    p.setNext(p.getNext().getNext());
+	    if (index==size()-1){
+		end = p;
+	    }else{
+		end = p.getNext();
+	    }
     	}
     	size--;
     	return oldValue;
@@ -171,7 +196,7 @@ public class MyLinkedList<T>{
     // insert a new element at the specified index, 0 at the front, size() at the end
     public boolean add(int index, T value){
     	if (index < 0 || index > size){
-    		throw new IndexOutOfBoundsException("Please enter a valid index.");
+	    throw new IndexOutOfBoundsException("Please enter a valid index.");
     	}
     	LNode<T> p = head;
     	if (head == null || index==0){
@@ -179,19 +204,19 @@ public class MyLinkedList<T>{
     	    head.setNext(p);
     	    size++;
     	}else if (index==size){
-    		add(value);
+	    add(value);
     	}
     	else{
-    		for (int i=0; i < index-1; i++){
-    			p=p.getNext();
-    		}
-    		LNode<T> nextNode = p.getNext();
-    		p.setNext(new LNode<T>(value));
-    		p.getNext().setNext(nextNode);
-    		size++;
-    		if (index==size()){
-    			end=p.getNext();
-    		}
+	    for (int i=0; i < index-1; i++){
+		p=p.getNext();
+	    }
+	    LNode<T> nextNode = p.getNext();
+	    p.setNext(new LNode<T>(value));
+	    p.getNext().setNext(nextNode);
+	    size++;
+	    if (index==size()){
+		end=p.getNext();
+	    }
 	    	
     	}
     	return true;
@@ -212,23 +237,20 @@ public class MyLinkedList<T>{
     
     public static void main(String[] args) {
 
-	//    LNode l = new LNode(4);
-	MyLinkedList<String> L = new MyLinkedList<String>();
+	MyLinkedList<Integer> n = new MyLinkedList<Integer>();
 	
-	
-	L.add("Hello");
-//	L.add(23);
-//	L.add(0, 13);
-//	System.out.println(L + " " + L.size());
-//	L.set(0,20);
-//	System.out.println(L + " " + L.size());
-//	System.out.println(L.remove(0));
-//	System.out.println(L + " " + L.size());
-//	L.add(2,20);
-	System.out.println(L + " " + L.size());
-	//	System.out.println(L);
-	//	System.out.println(L.indexOf(54));
-	//	System.out.println(L);
+	for (int i = 0; i < 20; i++){
+	    n.add(i);
+	}
+
+	Iterator<Integer> it = n.iterator();
+	while(it.hasNext()){
+	    Integer i = it.next();
+	    System.out.print(it.next()+" ");
+	   
+	}
+
+	System.out.println(n);
 
     }
 
