@@ -3,20 +3,21 @@ import java.util.NoSuchElementException;
 
 public class MyStack<T> {
 
-	MyLinkedList<T> L;
+    MyLinkedList<T> L = new MyLinkedList();
+
 	
 	/**
      * Adds the given item to the top of the stack.
      */
-    void push(T item){
-    	L.add(size(), item);
+    public void push(T item){
+    	L.add(item);
     };
 
     /**
      * Removes the top item from the stack and returns it.
      * @exception java.util.NoSuchElementException if the queue is empty.
      */
-    T pop(){
+    public T pop(){
     	if (isEmpty()){
     		throw new NoSuchElementException();
     	}
@@ -37,16 +38,39 @@ public class MyStack<T> {
     /**
      * Returns the number of items currently in the stack.
      */
-    int size(){
+    public int size(){
     	return L.size();
     };
 
     /**
      * Returns whether the stack is empty or not.
      */
-    boolean isEmpty(){
+    public boolean isEmpty(){
     	return L.size()==0;
     };
+
+    public static boolean isMatching(String s){
+	MyStack<Character> input = new MyStack<Character>();
+	for (int i=0; i < s.length(); i++){
+	    input.push(s.charAt(i));
+	}
+	
+
+	System.out.println(input.L);
+	return true;
+    }
+
+   
+
+
+    public static void main(String[] args){
+	String input="";
+	if(args.length > 0){
+	    input = args[0];
+	}
+
+	System.out.println(isMatching(input));
+    }
 }
 	
 	
