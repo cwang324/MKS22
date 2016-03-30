@@ -5,6 +5,10 @@ public class MyStack<T> {
 
 	MyLinkedList<T> L;
 	
+	public MyStack(){
+	    L = new MyLinkedList<T>();
+	}
+
 	/**
      * Adds the given item to the top of the stack.
      */

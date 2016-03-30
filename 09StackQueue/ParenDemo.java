@@ -23,6 +23,7 @@ public class ParenDemo {
 		// putting input into Linked List
 		MyStack<Character> stack = new MyStack<Character>();
 		
+		try{
 		char c;
 		for (int i=0; i<s.length(); i++){
 			c = s.charAt(i);
@@ -63,6 +64,9 @@ public class ParenDemo {
 				
 				
 				
+		}
+		}catch(NoSuchElementException e){
+		    return false;
 		}
 				
 			return stack.isEmpty();
