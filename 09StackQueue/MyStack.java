@@ -1,5 +1,5 @@
 import java.util.NoSuchElementException;
-
+import java.util.*;
 
 public class MyStack<T> {
 
@@ -51,6 +51,30 @@ public class MyStack<T> {
     boolean isEmpty(){
     	return L.size()==0;
     };
+
+    public static void main (String[] args){
+
+	MyStack<Integer> mine = new MyStack<Integer>();
+	Stack<Integer> real = new Stack<Integer>();
+	
+	for (int i=0; i < 1000000; i++){
+	    mine.push(i);
+	    real.push(i);
+	}
+
+	//	while(!mine.isEmpty()){
+
+	if (!(mine.peek().equals(real.peek()))){
+		System.out.println("peek broken");
+	    }
+
+	if (!(mine.pop().equals(real.pop()))){
+		System.out.println("pop broken");
+
+	    }
+	    //	}
+
+    }
 }
 	
 	
