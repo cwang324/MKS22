@@ -1,14 +1,15 @@
 import java.util.NoSuchElementException;
 
-public class MyDeque {
+public class MyDeque<T> {
 
     private static final int DEFAULT_SIZE = 10;
     
 	private Object[] deck;
 	private int start, end, size;
 
+	@SuppressWarnings( { "unchecked" } )
 	public MyDeque() {
-		deck = new Object[DEFAULT_SIZE];
+	    deck = (T[]) new Object[DEFAULT_SIZE];
 	}
 
 	
@@ -53,7 +54,7 @@ public class MyDeque {
 	}
 
 	
-	public Object getFirst()
+	public T getFirst()
 	{
 		if ( isEmpty())
 		{	
@@ -64,7 +65,7 @@ public class MyDeque {
 	}
 	
 
-	public Object getLast()
+	public T getLast()
 	{
 		if ( isEmpty())
 		{	
@@ -73,7 +74,7 @@ public class MyDeque {
 		return deck[end];
 	}
 	
-	public void addFirst(Object value) {
+	public void addFirst(T value) {
 		growIfNecessary();		
 		int newIndex = (start - 1 + deck.length) % deck.length;
 		deck[newIndex] = value;
@@ -82,7 +83,7 @@ public class MyDeque {
 	}
 
 	
-	public void addLast(Object value) {
+	public void addLast(T value) {
 		growIfNecessary();		
 		int newIndex = (end + deck.length) % deck.length;
 		deck[newIndex] = value;
