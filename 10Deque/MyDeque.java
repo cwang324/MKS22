@@ -4,7 +4,7 @@ public class MyDeque<T> {
 
     private static final int DEFAULT_SIZE = 10;
     
-	private Object[] deck;
+	private T[] deck;
 	private int start, end, size;
 
 	@SuppressWarnings( { "unchecked" } )
@@ -12,16 +12,17 @@ public class MyDeque<T> {
 	    deck = (T[]) new Object[DEFAULT_SIZE];
 	}
 
-	
+	@SuppressWarnings( { "unchecked" } )
 	private void grow(int newSize) {
 		
 		int capacity = newSize * 2;
-		Object[] newDeck = new Object[capacity];
+		
+		T[] newDeck = (T[]) new Object[capacity];
 		int index = 0;
 		
 		while (!isEmpty())
 		{
-		   Object cur = removeFirst();
+		   T cur = removeFirst();
 		   newDeck[index++] = cur;
 		}
 		start = 0;
@@ -30,25 +31,25 @@ public class MyDeque<T> {
 		size = capacity;
 	}
 
-	public Object removeFirst()
+	public T removeFirst()
 	{
 		if ( isEmpty())
 		{	
 			throw new NoSuchElementException();
 		}
-		Object t = deck[start];
+		T t = deck[start];
 		start = (start + 1) % deck.length;
 		return t;
 	}
 	
 
-	public Object removeLast()
+	public T removeLast()
 	{
 		if ( isEmpty())
 		{	
 			throw new NoSuchElementException();
 		}
-		Object t = deck[end];
+		T t = deck[end];
 		start = ( end - 1 + deck.length ) % deck.length;
 		return t;
 	}
@@ -116,22 +117,12 @@ public class MyDeque<T> {
 	    }
 	}
 	
-/*
- 0b. You need a private method to grow the array and copy over the values. 
-There are 6 public methods:
-1. void addFirst(T value)
-2. void addLast(T value)
--When the array is full, re-size, then add. 
--No exceptions are required since you will re-size.
+	public static void main(String[] args){
 
-3. T removeFirst()  
-4. T removeLast()  
--NoSuchElementException is thrown when there are no elements. 
 
-5. T getFirst()
-6. T getLast()
--NoSuchElementException is thrown when there are no elements. 	
- */
+	    MyDeque<String> d = new MyDeque<String>();
+
+	}
 	
 	
 }
