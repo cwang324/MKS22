@@ -20,8 +20,7 @@ public class MyDeque<T> {
 		T[] newDeck = (T[]) new Object[capacity];
 		int index = 0;
 		
-		while (!isEmpty())
-		{
+		while (!isEmpty()){
 		   T cur = removeFirst();
 		   newDeck[index++] = cur;
 		}
@@ -31,10 +30,8 @@ public class MyDeque<T> {
 		size = capacity;
 	}
 
-	public T removeFirst()
-	{
-		if ( isEmpty())
-		{	
+	public T removeFirst()	{
+		if ( isEmpty())	{	
 			throw new NoSuchElementException();
 		}
 		T t = deck[start];
@@ -43,10 +40,8 @@ public class MyDeque<T> {
 	}
 	
 
-	public T removeLast()
-	{
-		if ( isEmpty())
-		{	
+	public T removeLast()	{
+		if ( isEmpty())		{	
 			throw new NoSuchElementException();
 		}
 		T t = deck[end];
@@ -55,21 +50,16 @@ public class MyDeque<T> {
 	}
 
 	
-	public T getFirst()
-	{
-		if ( isEmpty())
-		{	
+	public T getFirst()	{
+		if ( isEmpty())	{	
 			throw new NoSuchElementException();
-		}
-		
+		}		
 		return deck[start];
 	}
 	
 
-	public T getLast()
-	{
-		if ( isEmpty())
-		{	
+	public T getLast()	{
+		if ( isEmpty())	{	
 			throw new NoSuchElementException();
 		}
 		return deck[end];
@@ -93,19 +83,16 @@ public class MyDeque<T> {
 	}
 	
 	
-	public int size()
-	{
+	public int size(){
 		return size;
 	}
 	
 	
-	private boolean isEmpty ()
-	{
+	private boolean isEmpty (){
 		return size == 0;
 	}
 	
-	private boolean isFull()
-	{
+	private boolean isFull(){
 		return size == deck.length;
 	}
 	
