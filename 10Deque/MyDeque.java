@@ -121,6 +121,9 @@ public class MyDeque<T> {
 
 
 	    MyDeque<String> d = new MyDeque<String>();
+	    
+	    
+
 
 	}
 	
