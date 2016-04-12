@@ -8,33 +8,31 @@ public class FrontierQueue<T> implements Frontier<T>{
     /***You can use your classes or built in ones***/
     /***You can extend another class OR wrap around it***/
 
-	public MyQueue<T> frontier;
+    private Queue<T> frontier;
 
 
 	
 	public FrontierQueue(){
-		frontier = new MyQueue<T>();
+	    frontier = new LinkedList<T>();
 	}
 	
 	public void add(T element) {
-		frontier.push(element);
+		frontier.add(element);
 	}
 
 
 
 	public boolean hasNext() {
-		return (! frontier.empty() );
+	    return (frontier.size() > 1);
 	}
 
 	
 
-	public T next() {
-		
-		
+	public T next() {		
 		if (!hasNext()) {
 			throw new NoSuchElementException();
 		}
-		T value = frontier.pop();
+		T value = frontier.remove();
 		return value;
 	}
 

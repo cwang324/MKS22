@@ -1,10 +1,11 @@
 public class Node{
 
-    Coordinate c;
+    int rc;
     Node prev;
 
-    public Node(Coordinate c, Node whereFrom){
-	this.c = c;
+    public Node(int r, int c, Node whereFrom){
+        rc[0]=r;
+	rc[1]=c;
 	prev = whereFrom;
     }
 
@@ -12,9 +13,14 @@ public class Node{
 	return prev;
     }
 
-    public Coordinate getValue(){
-	return c;
+    public int getRow(){
+	return rc[0];
     }
+
+    public int getCol(){
+	return rc[1];
+    }
+    
 	
 
 
