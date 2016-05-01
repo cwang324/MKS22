@@ -1,41 +1,23 @@
-import java.util.*;
 
-import javax.xml.soap.Node;
-
-
+import java.util.Stack;
 
 public class FrontierStack<T> implements Frontier<T>{
+	private Stack<T> data;
 
-	Stack<T> frontier;
-	T current;
-
-	
 	public FrontierStack(){
-	    frontier = new Stack<T>();
-	}
-	
-	public void add(T element) {
-	    frontier.push(element);
+		data = new Stack<T>();
 	}
 
-
-
-	public boolean hasNext() {
-	    return ( frontier.size()>1 );
+	public void add(T element){
+		data.push(element);
 	}
 
-	
-
-	public T next() {
-		
-	    if (!hasNext()) {
-		throw new NoSuchElementException();
-	    }
-	    T value = frontier.pop();
-	    return value;
+	public T next(){
+		return data.pop();
 	}
 
-			
+	public boolean hasNext(){
+		return !data.empty();
+	}
+
 }
-
-

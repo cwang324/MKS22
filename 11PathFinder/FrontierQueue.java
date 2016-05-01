@@ -1,41 +1,27 @@
-import java.util.NoSuchElementException;
-import java.util.*;
-
+import java.util.ArrayDeque;
 
 public class FrontierQueue<T> implements Frontier<T>{
-	
-    /***Make This Work This Weekend!***/
-    /***You can use your classes or built in ones***/
-    /***You can extend another class OR wrap around it***/
+	public ArrayDeque<T> data;
 
-    private Queue<T> frontier;
-
-
-	
 	public FrontierQueue(){
-	    frontier = new LinkedList<T>();
-	}
-	
-	public void add(T element) {
-		frontier.add(element);
+		data = new ArrayDeque<T>();
 	}
 
-
-
-	public boolean hasNext() {
-	    return (frontier.size() > 1);
+	public void add(T element){
+		data.addLast(element);
 	}
 
-	
+	public T next(){
+		return data.removeFirst();
+	}
 
-	public T next() {		
-		if (!hasNext()) {
-			throw new NoSuchElementException();
+	public boolean hasNext(){
+		if (data.size() == 0) {
+			return false;
+		}else {
+			return true;
 		}
-		T value = frontier.remove();
-		return value;
 	}
-
 	
 	
 }
