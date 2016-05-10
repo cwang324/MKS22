@@ -9,91 +9,95 @@ public class MyHeap<T extends Comparable<T>>
 
    public MyHeap(){
        size = 0;
-       data = (T[]) new Comparable[9];
+       data = (T[]) new Object[10];
    }
 
    public MyHeap(T[] array){
        size = array.length;
-       data = (T[]) new Comparable[size+1];
-       for (int i = 1; i < array.length; i++){
-	   data[i] = array[i-1];
-       }
+       data = (T[]) new Object[size+1];
        heapify();
    }
 
+   
+   private void swap(int k1, int k2) {
+       T tmp = data[k1];
+       data[k1] = data[k2];
+       data[k2] = tmp;        
+   }
+   
+   
    private void pushDown(int k){
-       T temp = data[k];
-       data[k] = data[2*k+1];
-       data[2*k] = temp;
+
+	   while (k*2+1 <= size){
+		   int smaller = k*2;
+	   
+	   
+		   if ( ((k*2+1) <= size) &&
+			   data[2*k].compareTo(data[2*k+1]) > 0){
+			   		smaller = 2*k+1;
+		   }
+		   
+		   if (data[k].compareTo(data[smaller]) > 0){
+			   swap(k, smaller);
+		   }else{
+			   break;
+		   }
+		   
+		   k = smaller;
+	   }
+	   
    }
 
    private void pushUp(int k){
-       T temp = data[k];
-       data[k] = data[k/2];
-       data[k/2] = temp;
+       while (k > 1 && data[k/2].compareTo(data[k]) > 0){
+    	   swap(k, k/2);
+    	   k = k/2;
+    	
+       }
    }
        
 
    private void heapify(){
-       int index = 1;
-       heapifyH(1);
+      for (int i = size/2; i > 0; i--){
+    	  pushDown(i);
+      }
    }
-
-   private void heapifyH(int index){
-       if (index>=1 && index <= size/2){
-	   
-	   if (data[index].compareTo(data[index*2])<0 ||
-	       data[index].compareTo(data[index*2+1]) < 0 ){
-
-	       if ( data[index].compareTo(data[index*2]) < 0 ){
-		   pushDown(index);
-		   heapifyH(index*2);
-	       }else{
-		   pushDown(index);
-		   heapifyH(index*2+1);
-	       }
-
+   
+   public T peek() {
+	   if (size==0){
+		   throw new NoSuchElementException();
 	   }
-    	
-       }		   
-    	        
+	   return data[1];
    }
    
    public T delete(){
-	   T removed = data[1];
+	   T removed = peek();
 	   data[1] = data[size];
-	   for (int i=1; i<size; i=i*2+1){
-	       pushDown(i);
-	   }
+	   data[size]=null;
 	   size--;
+	   pushDown(1);
 	   return removed;	   	   
    }
    
    public void add(T x){
 	   if (size==0){
 		   data[1] = x;
+	   }else if(size >= data.length -1){
+		   doubleSize();
 	   }else{
 		   	data[size+1]=x;
-		   	heapify();
+		   	pushUp(size+1);
 	   }
 	   size++;
    }
-
+   
    private void doubleSize(){
-       T[] doubleData = (T[]) new Comparable[size*2];
-       for (int i=1; i<size; i++){
-	   doubleData[i] = data[i];
-       }
-       data = doubleData;
+	   T[] newData = Arrays.copyOf(data, data.length * 2);
+	   data = newData;
    }
-
+   
    public String toString(){
-       String retString = "[ ";
-       for (T value : data){
-	   retString += value + " ";
-       }
-       retString += "]";
-       return retString;
+	   return Arrays.toString(data);
    }
 
    // //do this last
